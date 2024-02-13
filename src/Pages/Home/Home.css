@@ -1,0 +1,30 @@
+h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: #a855f7;
+}
+
+.home {
+  overflow: hidden;
+}
+
+.hero {
+  text-align: center;
+  display: flex;
+  padding: 0 10%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.right-side {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+img {
+  width: 500px;
+}

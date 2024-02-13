@@ -1,0 +1,60 @@
+.nav-link {
+  padding: 4px 6px;
+  text-decoration: none;
+  border-radius: 2px;
+  color: white;
+  font-weight: bold;
+  letter-spacing: 2px;
+  margin: 0 15px;
+  position: relative;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: white;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+  transition: width 0.3s;
+}
+
+.nav-active {
+  background-color: #f2f2f2;
+  color: #000;
+  font-weight: bold;
+}
+
+.mobile-nav-link {
+  text-decoration: none;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 2px;
+  color: #a855f7;
+  position: relative;
+}
+
+.mobile-nav-active::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 100%;
+  top: 50%;
+  left: -10px;
+  background-color: #a855f7;
+  transform: translateY(-50%);
+  clip-path: polygon(0% 0%, 50% 0, 100% 50%, 50% 100%, 0% 100%);
+}
+
+.settings-link {
+  text-decoration: none;
+}
+
+.hospital-icon {
+  color: white;
+}
