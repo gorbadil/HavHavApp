@@ -1,0 +1,11 @@
+.forms-area {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: end;
+  gap: 10px;
+}
+
+.add-btn {
+  width: 300px;
+}

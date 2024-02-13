@@ -1,0 +1,44 @@
+.table-head {
+  background-color: #a855f7;
+}
+
+.table-head-cell p {
+  color: white;
+  font-weight: bold;
+  font-size: 1.15em;
+}
+
+.selected {
+  background-color: #a855f733;
+}
+
+.not-selected {
+  background-color: white;
+}
+
+.delete-icon {
+  cursor: pointer;
+}
+
+.delete-icon:hover {
+  color: red;
+  animation: vibration 0.2s infinite;
+}
+
+@keyframes vibration {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(15deg);
+  }
+  50% {
+    transform: rotate(0deg) translateX(5px);
+  }
+  75% {
+    transform: rotate(-15deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}

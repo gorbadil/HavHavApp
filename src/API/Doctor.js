@@ -7,14 +7,14 @@ export const getDoctors = async () => {
   return data;
 };
 
-export const deleteDoctors = async (id) => {
+export const deleteDoctor = async (id) => {
   const { data } = await axios.delete(
     import.meta.env.VITE_API_URL + "/api/v1/doctors/" + id
   );
   return data;
 };
 
-export const addDoctors = async (doctor) => {
+export const addDoctor = async (doctor) => {
   const { data } = await axios.post(
     import.meta.env.VITE_API_URL + "/api/v1/doctors",
     doctor
@@ -22,7 +22,7 @@ export const addDoctors = async (doctor) => {
   return data;
 };
 
-export const updateDoctors = async (doctor) => {
+export const updateDoctor = async (doctor) => {
   const { data } = await axios.put(
     import.meta.env.VITE_API_URL + "/api/v1/doctors/" + doctor.id,
     doctor
