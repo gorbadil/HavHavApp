@@ -11,6 +11,7 @@ import Container from "@mui/material/Container";
 import { Typography } from "@mui/material";
 
 export default function Vaccaince() {
+  const alertStr = "Rapor Bulunamadı!";
   const apiList = [
     {
       name: "get",
@@ -95,7 +96,12 @@ export default function Vaccaince() {
       <Typography variant="h4" component="h2" gutterBottom mt={5}>
         Aşı Ekle
       </Typography>
-      <AddNewForm head={head} headName={headName} apiList={apiList} />
+      <AddNewForm
+        alertStr={alertStr}
+        head={head}
+        headName={headName}
+        apiList={apiList}
+      />
     </Container>
   );
 }

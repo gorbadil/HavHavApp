@@ -14,9 +14,10 @@ import { useQueryClient, useQueries } from "@tanstack/react-query";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import "./TableForm.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function TableForm({ head, apiList }) {
+  const [ready, setReady] = useState(false);
   TableForm.propTypes = {
     head: PropTypes.array,
     headName: PropTypes.array,
@@ -42,6 +43,19 @@ export default function TableForm({ head, apiList }) {
     apiData[api.name] = queries[index].data || api.apiFn;
   });
 
+  useEffect(() => {
+    const checkArrayValues = () => {
+      const allGetKeysWithArrayValues = apiList
+        .filter((api) => api.key.startsWith("get"))
+        .every((api) => Array.isArray(apiData[api.name]));
+      if (allGetKeysWithArrayValues) {
+        setReady(true);
+      }
+    };
+
+    checkArrayValues();
+  }, [apiData, apiList]);
+
   const handleDelete = async (e) => {
     const id = e.target.id;
     try {
@@ -62,7 +76,7 @@ export default function TableForm({ head, apiList }) {
     setUpdateForm({});
   };
 
-  if (!Array.isArray(apiData.get)) {
+  if (!ready) {
     return (
       <Box sx={{ width: "100%" }}>
         <LinearProgress />
@@ -108,6 +122,11 @@ export default function TableForm({ head, apiList }) {
                           autoComplete="off"
                           id={key}
                           key={`${key}${index}asd`}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                              handleUpdate();
+                            }
+                          }}
                           defaultValue={
                             updateForm.id === row.id
                               ? updateForm[key]
@@ -121,7 +140,10 @@ export default function TableForm({ head, apiList }) {
                           onChange={(e) => {
                             setUpdateForm({
                               ...updateForm,
-                              [key]: e.target.value,
+                              [key]:
+                                // headItemValue.field === "date"
+                                // ? e.target.value.toString()
+                                e.target.value,
                             });
                           }}
                         />
@@ -150,11 +172,18 @@ export default function TableForm({ head, apiList }) {
                           }}
                         >
                           {apiData[headItemValue.options].map(
-                            (option, index) => (
-                              <MenuItem key={index} value={option.id}>
-                                {option.name}
-                              </MenuItem>
-                            )
+                            (option, index) => {
+                              return (
+                                <MenuItem key={index} value={option.id}>
+                                  {headItemValue.dataBaseName ===
+                                  "appointmentId"
+                                    ? option.doctor.name +
+                                      " - " +
+                                      option.animal.name
+                                    : option.name}
+                                </MenuItem>
+                              );
+                            }
                           )}
                         </Select>
                       ) : null}

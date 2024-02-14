@@ -15,8 +15,16 @@ export const deleteVaccine = async (id) => {
 };
 
 export const addVaccine = async (vaccine) => {
-  vaccine.protectionStartDate = vaccine.protectionStartDate.substring(0, 10);
-  vaccine.protectionFinishDate = vaccine.protectionFinishDate.substring(0, 10);
+  const dateObjectStart = new Date(vaccine.protectionStartDate);
+  const dateObjectFinish = new Date(vaccine.protectionFinishDate);
+  const formattedDateTimeStringStart = new Date(
+    dateObjectStart.getTime() - dateObjectStart.getTimezoneOffset() * 60000
+  ).toISOString();
+  const formattedDateTimeStringFinish = new Date(
+    dateObjectFinish.getTime() - dateObjectFinish.getTimezoneOffset() * 60000
+  ).toISOString();
+  vaccine.protectionStartDate = formattedDateTimeStringStart;
+  vaccine.protectionFinishDate = formattedDateTimeStringFinish;
   vaccine = {
     name: vaccine.name,
     code: vaccine.code,
@@ -31,7 +39,7 @@ export const addVaccine = async (vaccine) => {
       dateOfBirth: vaccine.animal.dateOfBirth,
       colour: vaccine.animal.colour,
     },
-    reportId: Math.floor(Math.random() * 1000),
+    reportId: 1,
   };
   console.log(vaccine);
   const { data } = await axios.post(

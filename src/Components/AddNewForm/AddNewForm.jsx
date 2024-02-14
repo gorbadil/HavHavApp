@@ -10,14 +10,16 @@ import PropTypes from "prop-types";
 import { useQueryClient } from "@tanstack/react-query";
 import { useQueries } from "@tanstack/react-query";
 import Alert from "@mui/material/Alert";
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import "./AddNewForm.css";
 
-export default function AddNewForm({ head, apiList }) {
+export default function AddNewForm({ alertStr, head, apiList }) {
+  const [ready, setReady] = useState(false);
   AddNewForm.propTypes = {
     headName: PropTypes.array,
     head: PropTypes.array,
     apiList: PropTypes.array,
+    alertStr: PropTypes.string,
   };
   const queryClient = useQueryClient();
   const [addForm, setAddForm] = useState({});
@@ -33,11 +35,27 @@ export default function AddNewForm({ head, apiList }) {
       }
     }),
   });
-  let apiData = {};
 
-  apiList.forEach((api, index) => {
-    apiData[api.name] = queries[index].data || api.apiFn;
-  });
+  const apiData = useMemo(() => {
+    let data = {};
+    apiList.forEach((api, index) => {
+      data[api.name] = queries[index].data || api.apiFn;
+    });
+    return data;
+  }, [apiList, queries]);
+
+  useEffect(() => {
+    const checkArrayValues = () => {
+      const allGetKeysWithArrayValues = apiList
+        .filter((api) => api.key.startsWith("get"))
+        .every((api) => Array.isArray(apiData[api.name]));
+      if (allGetKeysWithArrayValues) {
+        setReady(true);
+      }
+    };
+
+    checkArrayValues();
+  }, [apiData, apiList]);
 
   const handleAdd = async () => {
     try {
@@ -53,7 +71,7 @@ export default function AddNewForm({ head, apiList }) {
     }
   };
 
-  if (!Array.isArray(apiData.get)) {
+  if (!ready) {
     return (
       <Box sx={{ width: "100%" }}>
         <LinearProgress />
@@ -69,12 +87,14 @@ export default function AddNewForm({ head, apiList }) {
           const headItemValue = Object.values(headItem)[0];
           return (
             <>
-              {headItemValue.field === "select" ? (
+              {headItemValue.field === "select" &&
+              Array.isArray(apiData[headItemValue.options]) ? (
                 <FormControl key={`keya${index}`} variant="outlined" fullWidth>
                   <InputLabel id={key}>{headItemValue.siteName}</InputLabel>
                   <Select
                     labelId={key}
                     id={key}
+                    key={`key${index}`}
                     value={addForm[key] ? addForm[key].id : ""}
                     label={headItemValue.siteName}
                     onChange={(e) => {
@@ -93,10 +113,12 @@ export default function AddNewForm({ head, apiList }) {
                     {apiData[headItemValue.options].map((item, index) => {
                       return (
                         <MenuItem
-                          key={`asd${item.id} ${index}`}
+                          key={`asd${item.id}-${index}`}
                           value={item.id}
                         >
-                          {item.name}
+                          {item.name
+                            ? item.name
+                            : `${item.doctor.name}-${item.animal.name}`}
                         </MenuItem>
                       );
                     })}
@@ -125,11 +147,7 @@ export default function AddNewForm({ head, apiList }) {
             </>
           );
         })}
-        {alert && (
-          <Alert severity="error">
-            Doktora Bir Bak Çalışıyor Mu? Yok! Anca Tıkla
-          </Alert>
-        )}
+        {alert && <Alert severity="error">{alertStr}</Alert>}
         <Button
           variant="contained"
           className="add-btn"

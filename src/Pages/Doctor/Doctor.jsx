@@ -36,7 +36,7 @@ export default function Doctor() {
     {
       name: "getDates",
       apiFn: getDates,
-      key: "getDates",
+      key: "get",
     },
     {
       name: "addDate",

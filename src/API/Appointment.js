@@ -15,8 +15,11 @@ export const deleteAppointment = async (id) => {
 };
 
 export const addAppointment = async (appointments) => {
-  appointments.date = new Date(appointments.date).toISOString();
-  console.log(appointments);
+  const dateObject = new Date(appointments.date);
+  const formattedDateTimeString = new Date(
+    dateObject.getTime() - dateObject.getTimezoneOffset() * 60000
+  ).toISOString();
+  appointments.date = formattedDateTimeString;
   const { data } = await axios.post(
     import.meta.env.VITE_API_URL + "/api/v1/appointments",
     appointments
@@ -25,7 +28,12 @@ export const addAppointment = async (appointments) => {
 };
 
 export const updateAppointment = async (appointments) => {
-  appointments.date = new Date(appointments.date).toISOString();
+  const dateObject = new Date(appointments.date);
+  const formattedDateTimeString = new Date(
+    dateObject.getTime() - dateObject.getTimezoneOffset() * 60000
+  ).toISOString();
+  appointments.date = formattedDateTimeString;
+  console.log(appointments);
   const { data } = await axios.put(
     import.meta.env.VITE_API_URL + "/api/v1/appointments/" + appointments.id,
     appointments

@@ -12,6 +12,7 @@ import Container from "@mui/material/Container";
 import { Typography } from "@mui/material";
 
 export default function Appointment() {
+  const alertStr = "Doktor Bulunamadı!";
   const apiList = [
     {
       name: "get",
@@ -88,7 +89,12 @@ export default function Appointment() {
       <Typography variant="h4" component="h2" gutterBottom mt={5}>
         Randevu Ekle
       </Typography>
-      <AddNewForm head={head} headName={headName} apiList={apiList} />
+      <AddNewForm
+        alertStr={alertStr}
+        head={head}
+        headName={headName}
+        apiList={apiList}
+      />
     </Container>
   );
 }
