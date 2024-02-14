@@ -19,7 +19,7 @@ const pages = [
   { name: "", path: "home" },
   { name: "Randevu", path: "appointment" },
   { name: "Rapor", path: "report" },
-  { name: "Aşı Sorgula", path: "vaccaine" },
+  { name: "Aşı", path: "vaccaine" },
 ];
 
 const settings = [
