@@ -4,6 +4,8 @@ import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
@@ -148,44 +150,46 @@ export default function TableForm({ head, apiList }) {
                           }}
                         />
                       ) : headItemValue.field === "select" ? (
-                        <Select
-                          id={key}
-                          key={`${key}${index}asd`}
-                          value={
-                            updateForm.id === row.id && updateForm[key]
-                              ? updateForm[key].id
-                              : row[key].id
-                          }
-                          onChange={(e) => {
-                            setUpdateForm((prev) => {
-                              const updatedItem = apiData[
-                                headItemValue.options
-                              ].find(
-                                (findItem) => findItem.id === e.target.value
-                              );
-                              const newState = {
-                                ...prev,
-                                [key]: { ...updatedItem },
-                              };
-                              return newState;
-                            });
-                          }}
-                        >
-                          {apiData[headItemValue.options].map(
-                            (option, index) => {
-                              return (
-                                <MenuItem key={index} value={option.id}>
-                                  {headItemValue.dataBaseName ===
-                                  "appointmentId"
-                                    ? option.doctor.name +
-                                      " - " +
-                                      option.animal.name
-                                    : option.name}
-                                </MenuItem>
-                              );
+                        <FormControl variant="standard">
+                          <Select
+                            id={key}
+                            key={`${key}${index}asd`}
+                            value={
+                              updateForm.id === row.id && updateForm[key]
+                                ? updateForm[key].id
+                                : row[key].id
                             }
-                          )}
-                        </Select>
+                            onChange={(e) => {
+                              setUpdateForm((prev) => {
+                                const updatedItem = apiData[
+                                  headItemValue.options
+                                ].find(
+                                  (findItem) => findItem.id === e.target.value
+                                );
+                                const newState = {
+                                  ...prev,
+                                  [key]: { ...updatedItem },
+                                };
+                                return newState;
+                              });
+                            }}
+                          >
+                            {apiData[headItemValue.options].map(
+                              (option, index) => {
+                                return (
+                                  <MenuItem key={index} value={option.id}>
+                                    {headItemValue.dataBaseName ===
+                                    "appointmentId"
+                                      ? option.doctor.name +
+                                        " - " +
+                                        option.animal.name
+                                      : option.name}
+                                  </MenuItem>
+                                );
+                              }
+                            )}
+                          </Select>
+                        </FormControl>
                       ) : null}
                     </TableCell>
                   );
