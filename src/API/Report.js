@@ -18,7 +18,7 @@ export const addReport = async (report) => {
   const newReport = {
     diagnosis: report.diagnosis,
     price: Number(report.price),
-    appointmentId: Number(report.appointmentId.id),
+    appointmentId: Number(report.appointmentForReportResponseDto.id),
   };
   const { data } = await axios.post(
     import.meta.env.VITE_API_URL + "/api/v1/reports",
