@@ -1,0 +1,19 @@
+.doctor-area {
+  width: 400px;
+}
+
+.ava-date {
+  display: flex;
+  border-bottom: 1px solid #555;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.fullDate {
+  font-family: "Courier New", Courier, monospace;
+  text-align: center;
+  font-size: large;
+  font-weight: bold;
+}

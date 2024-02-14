@@ -12,22 +12,22 @@ import { Typography } from "@mui/material";
 function Customer() {
   const apiList = [
     {
-      name: "getCustomers",
+      name: "get",
       apiFn: getCustomers,
       key: "get",
     },
     {
-      name: "addCustomer",
+      name: "add",
       apiFn: addCustomer,
       key: "add",
     },
     {
-      name: "updateCustomer",
+      name: "update",
       apiFn: updateCustomer,
       key: "update",
     },
     {
-      name: "deleteCustomer",
+      name: "delete",
       apiFn: deleteCustomer,
       key: "delete",
     },

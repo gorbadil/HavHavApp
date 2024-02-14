@@ -14,18 +14,18 @@ export const deleteAnimal = async (id) => {
   return data;
 };
 
-export const addAnimal = async (customer) => {
+export const addAnimal = async (animal) => {
   const { data } = await axios.post(
     import.meta.env.VITE_API_URL + "/api/v1/animals",
-    customer
+    animal
   );
   return data;
 };
 
-export const updateAnimal = async (customer) => {
+export const updateAnimal = async (animal) => {
   const { data } = await axios.put(
-    import.meta.env.VITE_API_URL + "/api/v1/animals/" + customer.id,
-    customer
+    import.meta.env.VITE_API_URL + "/api/v1/animals/" + animal.id,
+    animal
   );
   return data;
 };

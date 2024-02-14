@@ -14,20 +14,21 @@ export const deleteAppointment = async (id) => {
   return data;
 };
 
-export const addAppointment = async (customer) => {
-  customer.date = new Date(customer.date).toISOString();
-  console.log(customer);
+export const addAppointment = async (appointments) => {
+  appointments.date = new Date(appointments.date).toISOString();
+  console.log(appointments);
   const { data } = await axios.post(
     import.meta.env.VITE_API_URL + "/api/v1/appointments",
-    customer
+    appointments
   );
   return data;
 };
 
-export const updateAppointment = async (customer) => {
+export const updateAppointment = async (appointments) => {
+  appointments.date = new Date(appointments.date).toISOString();
   const { data } = await axios.put(
-    import.meta.env.VITE_API_URL + "/api/v1/appointments/" + customer.id,
-    customer
+    import.meta.env.VITE_API_URL + "/api/v1/appointments/" + appointments.id,
+    appointments
   );
   return data;
 };

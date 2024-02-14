@@ -29,16 +29,17 @@ export default function TableForm({ head, apiList }) {
     queries: apiList.map((api) => {
       if (api.key === "get") {
         return {
-          queryKey: [...api.name],
+          queryKey: [...`${api.apiFn}`],
           queryFn: api.apiFn,
         };
       }
     }),
   });
 
-  const apiData = {};
+  let apiData = {};
+
   apiList.forEach((api, index) => {
-    apiData[api.key] = queries[index].data || api.apiFn;
+    apiData[api.name] = queries[index].data || api.apiFn;
   });
 
   const handleDelete = async (e) => {
@@ -93,23 +94,29 @@ export default function TableForm({ head, apiList }) {
                   row.id === updateForm.id ? "selected" : "not-selected"
                 }
                 onFocus={() => {
-                  setUpdateForm({ ...row });
+                  updateForm.id !== row.id ? setUpdateForm({ ...row }) : null;
                 }}
               >
                 {head.map((headItem, index) => {
                   const key = Object.keys(headItem)[0];
-                  const value = Object.values(headItem)[0];
+                  const headItemValue = Object.values(headItem)[0];
                   return (
-                    <TableCell key={`${key}${index}`}>
-                      {value.field === "text" ? (
+                    <TableCell key={`${headItem[key]}${index}`}>
+                      {headItemValue.field !== "select" ? (
                         <TextField
                           variant="standard"
                           autoComplete="off"
                           id={key}
+                          key={`${key}${index}asd`}
                           defaultValue={
                             updateForm.id === row.id
                               ? updateForm[key]
                               : row[key]
+                          }
+                          type={
+                            headItemValue.field === "date"
+                              ? "datetime-local"
+                              : null
                           }
                           onChange={(e) => {
                             setUpdateForm({
@@ -118,24 +125,39 @@ export default function TableForm({ head, apiList }) {
                             });
                           }}
                         />
-                      ) : (
+                      ) : headItemValue.field === "select" ? (
                         <Select
                           id={key}
-                          value={row[key]}
+                          key={`${key}${index}asd`}
+                          value={
+                            updateForm.id === row.id && updateForm[key]
+                              ? updateForm[key].id
+                              : row[key].id
+                          }
                           onChange={(e) => {
-                            setUpdateForm({
-                              ...updateForm,
-                              [key]: e.target.value,
+                            setUpdateForm((prev) => {
+                              const updatedItem = apiData[
+                                headItemValue.options
+                              ].find(
+                                (findItem) => findItem.id === e.target.value
+                              );
+                              const newState = {
+                                ...prev,
+                                [key]: { ...updatedItem },
+                              };
+                              return newState;
                             });
                           }}
                         >
-                          {value.options.map((option, index) => (
-                            <MenuItem key={index} value={option}>
-                              {option}
-                            </MenuItem>
-                          ))}
+                          {apiData[headItemValue.options].map(
+                            (option, index) => (
+                              <MenuItem key={index} value={option.id}>
+                                {option.name}
+                              </MenuItem>
+                            )
+                          )}
                         </Select>
-                      )}
+                      ) : null}
                     </TableCell>
                   );
                 })}

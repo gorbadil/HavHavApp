@@ -4,32 +4,49 @@ import {
   deleteDoctor,
   updateDoctor,
 } from "../../API/Doctor";
+import { getDates, addDate, deleteDate } from "../../API/Avaliable";
 import TableForm from "../../Components/TableForm/TableForm";
 import AddNewForm from "../../Components/AddNewForm/AddNewForm";
+import Available from "../../Components/Available/Available";
 import Container from "@mui/material/Container";
 import { Typography } from "@mui/material";
 
 export default function Doctor() {
   const apiList = [
     {
-      name: "getDoctors",
+      name: "get",
       apiFn: getDoctors,
       key: "get",
     },
     {
-      name: "addDoctors",
+      name: "add",
       apiFn: addDoctor,
       key: "add",
     },
     {
-      name: "updateDoctors",
+      name: "update",
       apiFn: updateDoctor,
       key: "update",
     },
     {
-      name: "deleteDoctors",
+      name: "delete",
       apiFn: deleteDoctor,
       key: "delete",
+    },
+    {
+      name: "getDates",
+      apiFn: getDates,
+      key: "getDates",
+    },
+    {
+      name: "addDate",
+      apiFn: addDate,
+      key: "addDate",
+    },
+    {
+      name: "deleteDate",
+      apiFn: deleteDate,
+      key: "deleteDate",
     },
   ];
   const headName = ["doctors"];
@@ -41,7 +58,6 @@ export default function Doctor() {
         field: "text",
       },
     },
-
     {
       email: {
         dataBaseName: "email",
@@ -90,7 +106,7 @@ export default function Doctor() {
         Doktor Ekle
       </Typography>
       <AddNewForm head={head} headName={headName} apiList={apiList} />
-      {/* <AvaliableDate doctor={data} /> */}
+      <Available head={head} apiList={apiList} />
     </Container>
   );
 }
