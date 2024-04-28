@@ -1,6 +1,7 @@
 import Navbar from "./Components/Navbar/Navbar";
 import "./App.css";
-import { Switch, Route } from "react-router-dom/cjs/react-router-dom.min";
+import { Route } from "react-router-dom/cjs/react-router-dom.min";
+import { BrowserRouter } from "react-router-dom";
 import Home from "./Pages/Home/Home";
 import Appointment from "./Pages/Appointment/Appointment.jsx";
 import Vaccaine from "./Pages/Vaccaine/Vaccaine.jsx";
@@ -16,7 +17,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <Navbar />
       <div className="main-area">
-        <Switch>
+        <BrowserRouter>
           <Route exact path={["/", "/home"]}>
             <Home />
           </Route>
@@ -38,7 +39,7 @@ function App() {
           <Route path="/doctor">
             <Doctor />
           </Route>
-        </Switch>
+        </BrowserRouter>
       </div>
     </ThemeProvider>
   );
